@@ -45,7 +45,7 @@ namespace CNA
                 writer.WriteLine(userInput);
                 writer.Flush();
                 ProcessServerResponse();
-                if (userInput == "Hi")
+                if (userInput == "0")
                 {
                     break;
                     m_tcpClient.Close();

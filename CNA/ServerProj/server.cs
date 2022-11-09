@@ -34,21 +34,25 @@ namespace ServerProj
             NetworkStream stream = new NetworkStream(socket);
             StreamReader reader = new StreamReader(stream, Encoding.UTF8);
             StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
-            writer.WriteLine("You have connected to the server");
+            writer.WriteLine("You have connected to the server - input 0 to end");
             writer.Flush();
             while((receivedMessage = reader.ReadLine()) != null)
             {
                 writer.WriteLine(GetReturnMessage(receivedMessage));
                 writer.Flush();
+                if (receivedMessage == "0")
+                    break;
             }
             socket.Close();
         }
         private string GetReturnMessage(string code)
         {
-            if (code == "Hi")
+            if (code == "0")
+                return "0";
+            else if (code == "Hi")
                 return "Hello";
             else
-                return "!!!!!!!!";
+                return "!!!!!!!!!";
         }
     }
 }
