@@ -8,7 +8,7 @@ using System.Net;
 
 namespace ServerProj
 {
-    public class Server
+    internal class Server
     {
         private TcpListener m_TcpListener;
         public Server(string ipAddress, int port)
