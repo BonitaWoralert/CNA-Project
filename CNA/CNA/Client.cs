@@ -47,8 +47,8 @@ namespace CNA
                 ProcessServerResponse();
                 if (userInput == "0")
                 {
-                    break;
                     m_tcpClient.Close();
+                    break;
                 }
             }
         }

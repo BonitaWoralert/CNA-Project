@@ -5,9 +5,38 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
+using System.IO;
 
 namespace ServerProj
 {
+    internal class ConnectedClient
+    {
+        private Socket socket;
+        private NetworkStream stream;
+        private StreamReader reader;
+        private StreamWriter writer;
+        private object readLock;
+        private object writeLock;
+
+        public ConnectedClient(Socket socket)
+        {
+                                                          
+        }
+        public void Close()
+        {
+
+        }
+        public string Read()
+        {
+            return ".";
+        }
+        public void Send(string message)
+        {
+
+        }
+    }
+
+
     internal class Server
     {
         private TcpListener m_TcpListener;
