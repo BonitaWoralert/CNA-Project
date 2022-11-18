@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:CNA"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+    <Grid HorizontalAlignment="Center" Height="54" VerticalAlignment="Top" Width="800">
+        <TextBlock HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Center" Width="51" Margin="10,0,0,0"><Run Language="en-gb" Text="Server IP"/></TextBlock>
+        <TextBox HorizontalAlignment="Left" Margin="74,0,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Center" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Center" Width="51" Margin="229,0,0,0"><Run Language="en-gb" Text="Server IP"/></TextBlock>
+        <TextBox HorizontalAlignment="Left" Margin="293,0,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Center" Width="120"/>
     </Grid>
 </Window>

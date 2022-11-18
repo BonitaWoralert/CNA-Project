@@ -5,7 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <StartupObject>CNA.Program</StartupObject>
+    <StartupObject>CNA.App</StartupObject>
   </PropertyGroup>
 
 </Project>
