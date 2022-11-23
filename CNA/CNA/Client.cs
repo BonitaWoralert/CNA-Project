@@ -9,7 +9,7 @@ using System.IO;
 
 namespace CNA
 {
-    internal class Client
+    public class Client
     {
         private TcpClient m_tcpClient;
         private NetworkStream stream;

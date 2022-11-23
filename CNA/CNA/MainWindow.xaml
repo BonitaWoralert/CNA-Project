@@ -19,7 +19,7 @@
         <TextBox HorizontalAlignment="Left" Margin="488,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="103" TextChanged="TextBox_TextChanged_2"/>
         <TextBlock HorizontalAlignment="Left" Height="318" Margin="47,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="544" Background="White" MaxWidth="544"/>
         <TextBox HorizontalAlignment="Left" Height="24" Margin="103,376,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="488" TextChanged="TextBox_TextChanged_3"/>
-        <Button Content="Send" HorizontalAlignment="Left" Height="24" Margin="605,376,0,0" VerticalAlignment="Top" Width="144" Background="White"/>
+        <Button Content="Send" HorizontalAlignment="Left" Height="24" Margin="605,376,0,0" VerticalAlignment="Top" Width="144" Background="White" Click="Button_Click"/>
         <CheckBox Content="Enable Server" HorizontalAlignment="Left" Height="19" Margin="605,42,0,0" VerticalAlignment="Top" Width="102"/>
         <CheckBox Content="Use Encryption" HorizontalAlignment="Left" Height="19" Margin="605,73,0,0" VerticalAlignment="Top" Width="102"/>
         <TextBlock HorizontalAlignment="Left" Height="227" Margin="605,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Background="White"/>

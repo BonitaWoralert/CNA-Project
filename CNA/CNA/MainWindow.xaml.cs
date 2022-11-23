@@ -20,27 +20,23 @@ namespace CNA
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private Client m_client;
+        public MainWindow(Client client)
+        {
+        }
+        /*
+        public MainWindow(Client client)
         {
             InitializeComponent();
-        }
+            m_client = client;
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        }
+         */
+        public void UpdateChatBox(string message)
         {
 
         }
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_3(object sender, TextChangedEventArgs e)
+        private void sendMessageButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
