@@ -70,10 +70,11 @@ namespace ServerProj
             int clientIndex = 0;
             int connections = 0;
             m_TcpListener.Start();
-            while(connections <= 5)
+            while(connections < 5)
             {
                 Console.WriteLine("Listening...");
                 Socket socket = m_TcpListener.AcceptSocket();
+                connections++;
                 Console.WriteLine("Connection Made");
                 ConnectedClient client = new ConnectedClient(socket);
                 int index = clientIndex;
@@ -91,27 +92,18 @@ namespace ServerProj
         {
             string receivedMessage;
             m_clients[index].Send("You have connected to the server - input 0 to end");
-            receivedMessage = m_clients[index].Read();
-            m_clients[index].Send(GetReturnMessage(receivedMessage));
-            if (receivedMessage == "0")
+            while((receivedMessage = m_clients[index].Read()) != null)
             {
-                m_clients[index].Close();
-                ConnectedClient c;
-                m_clients.TryRemove(index, out c);
-            }
-            //NetworkStream stream = new NetworkStream(socket);
-            //StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
-            //StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-            //writer.WriteLine("You have connected to the server - input 0 to end");
-            //writer.Flush();
-            /*while((receivedMessage = reader.ReadLine()) != null)
-            {
-                writer.WriteLine(GetReturnMessage(receivedMessage));
-                writer.Flush();
+                m_clients[index].Send(GetReturnMessage(receivedMessage));
                 if (receivedMessage == "0")
+                {
                     break;
+                }
             }
-            socket.Close();*/
+            //close client
+            m_clients[index].Close();
+            ConnectedClient c;
+            m_clients.TryRemove(index, out c);
         }
         private string GetReturnMessage(string code)
         {
