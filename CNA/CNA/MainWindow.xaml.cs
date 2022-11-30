@@ -35,14 +35,18 @@ namespace CNA
                 ChatBox.ScrollToEnd();
             });
         }
-        private void Button_Click(object sender, EventArgs e)
+        private void Button_Click(object sender, EventArgs e) //send button
         {
             m_client.SendMessage(MessageText.Text);
             MessageText.Clear();
         }
+        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e) //nickname field
+        {
+
+        }
+        #region ?
         private void sendMessageButton_Click(object sender, EventArgs e)
         {
-            //call send message on client object and pass in messagetext.text value
         }
 
         private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
@@ -50,14 +54,11 @@ namespace CNA
 
         }
 
-        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
-        {
-
-        }
 
         private void TextBox_TextChanged_3(object sender, TextChangedEventArgs e)
         {
 
         }
+        #endregion
     }
 }
