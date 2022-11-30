@@ -23,20 +23,39 @@ namespace CNA
         private Client m_client;
         public MainWindow(Client client)
         {
-        }
-        /*
-        public MainWindow(Client client)
-        {
             InitializeComponent();
             m_client = client;
-
         }
-         */
+
         public void UpdateChatBox(string message)
+        {
+            ChatBox.Dispatcher.Invoke(() =>
+            {
+                ChatBox.Text += message + Environment.NewLine;
+                ChatBox.ScrollToEnd();
+            });
+        }
+        private void sendMessageButton_Click(object sender, EventArgs e)
+        {
+            //call send message on client object and pass in messagetext.text value
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
 
         }
-        private void sendMessageButton_Click(object sender, RoutedEventArgs e)
+
+        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged_3(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
 
         }

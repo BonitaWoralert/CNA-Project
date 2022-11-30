@@ -15,6 +15,7 @@ namespace CNA
         private NetworkStream stream;
         private StreamWriter writer;
         private StreamReader reader;
+        private MainWindow form;
 
         public Client()
         {
@@ -38,6 +39,7 @@ namespace CNA
         }
         public void Run()
         {
+            form = new MainWindow(client);
             string userInput;
             ProcessServerResponse();
             while ((userInput = Console.ReadLine()) != null)
@@ -56,6 +58,10 @@ namespace CNA
         {
             Console.WriteLine("Server says: " + reader.ReadLine());
             Console.WriteLine();
+        }
+        public void SendMessage(string message)
+        {
+
         }
     }
 }
