@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
 using System.IO;
+using System.Threading;
 
 namespace CNA
 {
@@ -39,29 +40,27 @@ namespace CNA
         }
         public void Run()
         {
-            form = new MainWindow(client);
+            form = new MainWindow(this);
             string userInput;
-            ProcessServerResponse();
-            while ((userInput = Console.ReadLine()) != null)
-            {
-                writer.WriteLine(userInput);
-                writer.Flush();
-                ProcessServerResponse();
-                if (userInput == "0")
-                {
-                    m_tcpClient.Close();
-                    break;
-                }
-            }
+            Thread thread = new Thread(() => { ProcessServerResponse(); });
+            thread.Start();
+            form.ShowDialog();
+
         }
         private void ProcessServerResponse()
         {
+            while(m_tcpClient.Connected)
+            {
+                form.UpdateChatBox(reader.ReadLine());
+            }
             Console.WriteLine("Server says: " + reader.ReadLine());
             Console.WriteLine();
         }
         public void SendMessage(string message)
         {
-
+            writer.WriteLine(message);
+            form.UpdateChatBox(message);
+            writer.Flush();
         }
     }
 }

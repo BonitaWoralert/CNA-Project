@@ -16,7 +16,7 @@
         <TextBlock HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" Margin="266,10,0,0"><Run Language="en-gb" Text="Port"/><LineBreak/><Run Language="en-gb"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" Margin="418,10,0,0"><Run Language="en-gb" Text="Local Name"/><LineBreak/><Run Language="en-gb"/></TextBlock>
         <TextBox HorizontalAlignment="Left" Margin="488,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="103" TextChanged="TextBox_TextChanged_2"/>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="103,376,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="488" TextChanged="TextBox_TextChanged_3"/>
+        <TextBox x:Name="MessageText" HorizontalAlignment="Left" Height="24" Margin="103,376,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="488" TextChanged="TextBox_TextChanged_3"/>
         <Button x:Name="sendMessage" Content="Send" HorizontalAlignment="Left" Height="24" Margin="605,376,0,0" VerticalAlignment="Top" Width="144" Background="White" Click="Button_Click"/>
         <CheckBox Content="Enable Server" HorizontalAlignment="Left" Height="19" Margin="605,42,0,0" VerticalAlignment="Top" Width="102"/>
         <CheckBox Content="Use Encryption" HorizontalAlignment="Left" Height="19" Margin="605,73,0,0" VerticalAlignment="Top" Width="102"/>
