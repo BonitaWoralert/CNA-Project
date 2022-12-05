@@ -8,6 +8,9 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 using System.Collections.Concurrent;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using Packets;
 
 namespace ServerProj
 {
@@ -15,8 +18,9 @@ namespace ServerProj
     {
         private Socket m_socket;
         private NetworkStream m_stream;
-        private StreamReader m_reader;
-        private StreamWriter m_writer;
+        private BinaryReader m_reader;
+        private BinaryWriter m_writer;
+        private BinaryFormatter m_formatter;
         private object m_readLock;
         private object m_writeLock;
 
@@ -26,8 +30,9 @@ namespace ServerProj
             m_readLock = new object();
             m_socket = socket;
             m_stream = new NetworkStream(socket);
-            m_reader = new StreamReader(m_stream, Encoding.UTF8);
-            m_writer = new StreamWriter(m_stream, Encoding.UTF8);
+            m_reader = new BinaryReader(m_stream, Encoding.UTF8);
+            m_writer = new BinaryWriter(m_stream, Encoding.UTF8);
+            m_formatter = new BinaryFormatter();
         }
         public void Close()
         {
@@ -36,19 +41,28 @@ namespace ServerProj
             m_reader.Close();
             m_writer.Close();
         }
-        public string Read()
+        public Packet Read()
         {
             lock (m_readLock)
             {
-                return m_reader.ReadLine();
+                int numberOfBytes;
+                if ((numberOfBytes = m_reader.ReadInt32()) != -1)
+                {}
+                byte[] buffer = m_reader.ReadBytes(numberOfBytes);
+                MemoryStream memstream = new MemoryStream(buffer);
+                return m_formatter.Deserialize(memstream) as Packet;
             }
         }
-        public void Send(string message)
+        public void Send(Packet message)
         {
             lock (m_writeLock)
             {
-                m_writer.WriteLine(message);
-                m_writer.Flush();
+                MemoryStream memstream = new MemoryStream();
+                m_formatter.Serialize(memstream, message);
+                byte[] buffer = memstream.GetBuffer();
+                m_writer.Write(buffer.Length); //writes length so size can be checked
+                m_writer.Write(buffer); //writes data
+                m_writer.Flush(); //flush
             }
         }
     }
