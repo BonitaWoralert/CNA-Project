@@ -104,17 +104,20 @@ namespace ServerProj
         }
         private void ClientMethod(int index)
         {
-            string receivedMessage;
-            m_clients[index].Send("You have connected to the server - input 0 to end");
+            Packet receivedMessage;
+            //m_clients[index].Send("You have connected to the server - input 0 to end");
+
             while((receivedMessage = m_clients[index].Read()) != null)
             {
-                m_clients[index].Send(GetReturnMessage(receivedMessage));
-                if (receivedMessage == "0")
+                switch (receivedMessage.m_PacketType)
                 {
-                    break;
+                    case PacketType.ChatMessage:
+                        ChatMessagePacket chatPacket = (ChatMessagePacket)receivedMessage;
+                        m_clients[index].Send(new ChatMessagePacket(GetReturnMessage(chatPacket.m_message)));
+                        break;
                 }
             }
-            //close client
+            
             m_clients[index].Close();
             ConnectedClient c;
             m_clients.TryRemove(index, out c);
