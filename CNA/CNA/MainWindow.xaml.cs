@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Packets;
 
+
 namespace CNA
 {
     /// <summary>
@@ -22,28 +23,32 @@ namespace CNA
     public partial class MainWindow : Window
     {
         private Client m_client;
+        string Username = "";
         public MainWindow(Client client)
         {
             InitializeComponent();
             m_client = client;
+            //Nickname.Text = 
+            
         }
 
         public void UpdateChatBox(string message)
         {
             ChatBox.Dispatcher.Invoke(() =>
             {
-                ChatBox.Text += message + Environment.NewLine;
+                ChatBox.Text += Username + ": " + message + Environment.NewLine;
                 ChatBox.ScrollToEnd();
             });
         }
         private void Button_Click(object sender, EventArgs e) //send button
         {
             m_client.SendMessage(new ChatMessagePacket(MessageText.Text));
+            UpdateChatBox(MessageText.Text);
             MessageText.Clear();
         }
         private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e) //nickname field
         {
-
+            Username = Nickname.Text;
         }
         #region ?
         private void sendMessageButton_Click(object sender, EventArgs e)

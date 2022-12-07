@@ -70,7 +70,7 @@ namespace CNA
                             {
                                 case PacketType.ChatMessage:
                                     ChatMessagePacket chatPacket = (ChatMessagePacket)receivedMessage;
-                                    form.UpdateChatBox(chatPacket.m_message);
+                                    //form.UpdateChatBox(chatPacket.m_message);
                                     break;
                             }
                         }

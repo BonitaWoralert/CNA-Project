@@ -71,6 +71,7 @@ namespace ServerProj
     {
         private TcpListener m_TcpListener;
         private ConcurrentDictionary<int, ConnectedClient> m_clients;
+        int clientIndex;
 
         public Server(string ipAddress, int port)
         {
@@ -80,7 +81,7 @@ namespace ServerProj
         public void Start()
         {
             m_clients = new ConcurrentDictionary<int, ConnectedClient>();
-            int clientIndex = 0;
+            clientIndex = 0;
             int connections = 0;
             m_TcpListener.Start();
             while(connections < 5)
@@ -104,15 +105,24 @@ namespace ServerProj
         private void ClientMethod(int index)
         {
             Packet receivedMessage;
-            //m_clients[index].Send("You have connected to the server - input 0 to end");
 
             while((receivedMessage = m_clients[index].Read()) != null)
             {
                 switch (receivedMessage.m_PacketType)
                 {
+                    /*
                     case PacketType.ChatMessage:
                         ChatMessagePacket chatPacket = (ChatMessagePacket)receivedMessage;
                         m_clients[index].Send(new ChatMessagePacket(GetReturnMessage(chatPacket.m_message)));
+                        break;
+                    */
+                    case PacketType.ChatMessage:
+                        ChatMessagePacket chatPacket = (ChatMessagePacket)receivedMessage;
+                        for (int i = 0; i < clientIndex; i++)
+                        {
+                            m_clients[i].Send(receivedMessage);
+                            //m_clients[i].Send(new ChatMessagePacket(GetReturnMessage(chatPacket.m_message)));
+                        }
                         break;
                 }
             }
