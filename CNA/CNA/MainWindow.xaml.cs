@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Packets;
 
 namespace CNA
 {
@@ -37,7 +38,7 @@ namespace CNA
         }
         private void Button_Click(object sender, EventArgs e) //send button
         {
-            m_client.SendMessage(MessageText.Text);
+            m_client.SendMessage(new ChatMessagePacket(MessageText.Text));
             MessageText.Clear();
         }
         private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e) //nickname field

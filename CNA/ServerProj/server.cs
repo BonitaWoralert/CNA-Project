@@ -46,8 +46,7 @@ namespace ServerProj
             lock (m_readLock)
             {
                 int numberOfBytes;
-                if ((numberOfBytes = m_reader.ReadInt32()) != -1)
-                {}
+                if ((numberOfBytes = m_reader.ReadInt32()) != -1) {}
                 byte[] buffer = m_reader.ReadBytes(numberOfBytes);
                 MemoryStream memstream = new MemoryStream(buffer);
                 return m_formatter.Deserialize(memstream) as Packet;

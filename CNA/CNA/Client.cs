@@ -7,15 +7,18 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 using System.Threading;
+using System.Runtime.Serialization.Formatters.Binary;
+using Packets;
 
 namespace CNA
 {
     public class Client
     {
         private TcpClient m_tcpClient;
-        private NetworkStream stream;
-        private StreamWriter writer;
-        private StreamReader reader;
+        private NetworkStream m_stream;
+        private BinaryWriter m_writer;
+        private BinaryReader m_reader;
+        private BinaryFormatter m_formatter;
         private MainWindow form;
 
         public Client()
@@ -27,9 +30,10 @@ namespace CNA
             try
             {
                 m_tcpClient.Connect(ipAddress, port);
-                stream = m_tcpClient.GetStream();
-                writer = new StreamWriter(stream);
-                reader = new StreamReader(stream);
+                m_stream = m_tcpClient.GetStream();
+                m_writer = new BinaryWriter(m_stream);
+                m_reader = new BinaryReader(m_stream);
+                m_formatter = new BinaryFormatter();
                 return true;
             }
             catch (Exception e)
@@ -49,18 +53,44 @@ namespace CNA
         }
         private void ProcessServerResponse()
         {
-            while(m_tcpClient.Connected)
+            try
             {
-                form.UpdateChatBox(reader.ReadLine());
+                while (m_tcpClient.Connected)
+                {
+                    int numberOfBytes;
+                    if ((numberOfBytes = m_reader.ReadInt32()) != -1)
+                    {
+                        byte[] buffer = m_reader.ReadBytes(numberOfBytes);
+                        MemoryStream memstream = new MemoryStream(buffer);
+                        Packet receivedMessage = m_formatter.Deserialize(memstream) as Packet;
+
+                        if(receivedMessage != null)
+                        {
+                            switch(receivedMessage.m_PacketType)
+                            {
+                                case PacketType.ChatMessage:
+                                    ChatMessagePacket chatPacket = (ChatMessagePacket)receivedMessage;
+                                    form.UpdateChatBox(chatPacket.m_message);
+                                    break;
+                            }
+                        }
+                    }
+                }
             }
-            Console.WriteLine("Server says: " + reader.ReadLine());
-            Console.WriteLine();
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
         }
-        public void SendMessage(string message)
+        public void SendMessage(Packet message)
         {
-            writer.WriteLine(message);
-            form.UpdateChatBox(message);
-            writer.Flush();
+            MemoryStream memstream = new MemoryStream();
+            m_formatter.Serialize(memstream, message);
+            byte[] buffer = memstream.GetBuffer();
+            m_writer.Write(buffer.Length);
+            m_writer.Write(buffer);
+            //form.UpdateChatBox(message);
+            m_writer.Flush();
         }
     }
 }
